@@ -6,7 +6,7 @@
 class(TernarySearchTreeNode):
   def __init__(self, letter):
     self.letter = letter
-    self.lo, self.equal, self.hi = None
+    self.lo, self.equal, self.hi, self.word_end = None
 
 class (TernarySearchTree):
   def __init__(self):
@@ -16,31 +16,30 @@ class (TernarySearchTree):
     if not word:
       raise KeyError("No word is given!")
     index = 0
-    node = None
-    string_list = []
-    string_list.append(word)
     if self._root is None:
-      self._root == self.insert(self.root, word[index])
-      return
-    else:
+      self._root = TernarySearchTreeNode(word[index])
+    node = self._root
+    while index < len(word):
       letter = word[index]
-      if node == None:
-        node = TernarySearchTreeNode(letter)
-      while index < len(word):
-        if letter > node.letter:
-          if node.hi is None:
-            node.hi = self.insert(node.hi, letter)
-            index += 1
-        if letter < node.letter:
-          if node.lo is None:
-            node.lo = self.insert(node.lo, letter)
-            index += 1
-        if letter == node.letter:
-          if node.equal is None:
-            node.equal = self.insert(node.equal, letter)
-            index += 1
+      if letter > node.letter:
+        if node.hi is None:
+          node.hi = TernarySearchTreeNode(letter)
+        node = node.hi
+        continue
+      if letter < node.letter:
+        if node.lo is None:
+          node.lo = TernarySearchTreeNode(letter)
+        node = node.lo
+        continue
+      elif letter == node.letter:
+        index += 1
         if index == len(word):
-          return node
+          node.end_word = True
+          return
+        if node.equal == None:
+          node.equal = TernarySearchTreeNode(word[index])
+        node = node.equal
+
 
   def all_strings(self):
     if not string_list:

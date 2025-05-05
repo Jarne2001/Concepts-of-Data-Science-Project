@@ -11,11 +11,13 @@ class(TernarySearchTreeNode):
 class (TernarySearchTree):
   def __init__(self):
     self._root = None
+    self._string_list = []
 
   def insert(self, word):
     if not word:
       raise KeyError("No word is given!")
     index = 0
+    self._string_list.append(word)
     if self._root is None:
       self._root = TernarySearchTreeNode(word[index])
     node = self._root
@@ -42,14 +44,14 @@ class (TernarySearchTree):
 
 
   def all_strings(self):
-    if not string_list:
+    if not self._string_list:
       return print("Tree is empty!")
-    return string_list
+    return self._string_list
 
   def len(self):
-    if not string_list:
+    if not self._string_list:
       return 0
-    return len(string_list)
+    return len(self._string_list)
     
     
       

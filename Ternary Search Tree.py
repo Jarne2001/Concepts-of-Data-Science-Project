@@ -42,11 +42,31 @@ class (TernarySearchTree):
           node.equal = TernarySearchTreeNode(word[index])
         node = node.equal
 
-
   def all_strings(self):
     if not self._string_list:
       return print("Tree is empty!")
     return self._string_list
+
+  def search(self, word):
+    if self._root is None:
+      return False
+    if self._root != word[0]
+    index = 1
+    while len(word) > index:
+      letter = word[index]
+      if letter == node.lo.letter:
+        index += 1
+        continue
+      if letter == node.equal.letter:
+        index += 1
+        continue
+      if letter == node.hi.letter:
+        index += 1
+        continue
+      else:
+        return False
+    return True
+    
 
   def len(self):
     if not self._string_list:

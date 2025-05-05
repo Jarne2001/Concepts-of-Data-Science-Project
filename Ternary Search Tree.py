@@ -46,27 +46,33 @@ class (TernarySearchTree):
     if not self._string_list:
       return print("Tree is empty!")
     return self._string_list
-
+  
   def search(self, word):
+    if not word:
+      raise KeyError("No word is given!")
     if self._root is None:
       return False
-    if self._root != word[0]
+    node = self._root
+    if node.letter != word[0]
+      return False
     index = 1
+    node = node.equal
+    
     while len(word) > index:
       letter = word[index]
-      if letter == node.lo.letter:
-        index += 1
+      if letter > node.letter:
+        node = node.hi
         continue
-      if letter == node.equal.letter:
-        index += 1
+      if letter < node.letter:
+        node = node.lo
         continue
-      if letter == node.hi.letter:
+      if letter == node.letter
+        node = node.equal
         index += 1
         continue
       else:
         return False
     return True
-    
 
   def len(self):
     if not self._string_list:

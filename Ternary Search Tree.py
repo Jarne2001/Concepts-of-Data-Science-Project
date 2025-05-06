@@ -3,12 +3,12 @@
 # I suggest making 2 classes: a Ternary Search Tree Node and a Ternary Search Tree with currently 4 functions: insert, search, all_strings and delete (and
 # potentially also a function printing out the tree?)
 
-class(TernarySearchTreeNode):
+class TernarySearchTreeNode:
   def __init__(self, letter):
     self.letter = letter
     self.lo, self.equal, self.hi, self.word_end = None
 
-class (TernarySearchTree):
+class TernarySearchTree:
   def __init__(self):
     self._root = None
     self._string_list = []
@@ -44,8 +44,9 @@ class (TernarySearchTree):
 
   def all_strings(self):
     if not self._string_list:
-      return print("Tree is empty!")
-    return self._string_list
+      print("Tree is empty!")
+      return []
+    return set(self._string_list)
   
   def search(self, word):
     if not word:
@@ -53,7 +54,7 @@ class (TernarySearchTree):
     if self._root is None:
       return False
     node = self._root
-    if node.letter != word[0]
+    if node.letter != word[0]:
       return False
     index = 1
     node = node.equal
@@ -66,12 +67,13 @@ class (TernarySearchTree):
       if letter < node.letter:
         node = node.lo
         continue
-      if letter == node.letter
+      if letter == node.letter:
         node = node.equal
         index += 1
         continue
       else:
         return False
+    node.word_end = True
     return True
 
   def len(self):

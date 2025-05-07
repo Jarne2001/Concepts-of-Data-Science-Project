@@ -83,6 +83,10 @@ class TernarySearchTree:
     
   def delete(self, word):
     pass
+
+  def print(self, print):
+    pass
+  
       
       
   

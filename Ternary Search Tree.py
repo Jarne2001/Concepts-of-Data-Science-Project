@@ -81,8 +81,8 @@ class TernarySearchTree:
       return 0
     return len(self._string_list)
     
-    
-      
+  def delete(self, word):
+    pass
       
       
   

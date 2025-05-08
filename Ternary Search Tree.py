@@ -126,7 +126,10 @@ class TernarySearchTree:
     return True
 
   def print(self, print):
-    pass
+    """
+    Here comes the print function, textual or visual, which should first display the root, and each time check whether the node has multiple children or one, these should be displayed in the row.
+    For each layer, it should be checked each time how many letters it contains.
+    """
   
       
       

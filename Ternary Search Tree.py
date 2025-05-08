@@ -82,7 +82,48 @@ class TernarySearchTree:
     return len(self._string_list)
     
   def delete(self, word):
-    pass
+    """
+   wat er moet gebeuren is, als het de laatste letter is van het ene woord, dat moet wordenv verwijderd, dan moet alles alle letters worden verwijderd 
+   totdat er een aftakking is of de volgende woord eindigd 
+    """
+    if word not in self._string_list:
+      raise KeyError(f"{word} is not in the tree.")
+    elif not word:
+      raise KeyError("No word is given!")
+    index = 0
+    self._string_list.remove(word)
+    path = []
+    node = self._root
+    while index < len(word):
+      letter = word[index]
+      if letter > node.letter:
+        path.append((node, 'hi'))
+        node = node.hi
+        continue
+      elif letter < node.letter:
+        path.append((node, 'lo'))
+        node = node.lo
+        continue
+      else:
+        path.append((node, 'equal'))
+  
+        if index == len(word) - 1:
+          node.word_end = False
+          break
+        
+        node = node.equal
+        index += 1
+        
+    while path and not node.lo and not node.hi and not node.equal and not node.word_end:
+      i, j = path.pop()
+      if j == 'lo':
+        i.lo = None
+      elif j == 'hi':
+        i.hi = None
+      else:
+        i.equal = None
+    node = i
+    return True
 
   def print(self, print):
     pass

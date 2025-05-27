@@ -121,7 +121,7 @@ class TernarySearchTree:
           break
         node = node.equal
         index += 1
-    while path and not node.lo and not node.hi and not node.equal and not node.word_end:
+    while path and not node.lo and not node.hi and not node.equal and not node.word_end: # type: ignore
       i, j = path.pop()
       if j == 'lo':
           i.lo = None
@@ -132,24 +132,54 @@ class TernarySearchTree:
       node = i
     return True
 
-  def print_tst(self, print_tst):
-    """
-    Here comes the print function, textual or visual, which should first display the root, and each time check whether the node has multiple children or one, these should be displayed in the row.
-    For each layer, it should be checked each time how many letters it contains.
-    """
+  def print_tst(self):
+    if not self._string_list:
+      print("Tree is empty!")
+      return
+    print(f"terminates: {self._root.word_end}")
+    print(f"       char: {self._root.letter}, terminates: {self._root.word_end}")
+    nodes_to_print = []
+    spaces = "  " 
+    if self._root.equal:
+        nodes_to_print.append((self._root.equal, "_eq:", ""))
+    if self._root.lo:
+        nodes_to_print.append((self._root.lo, "_lo:", ""))
+    if self._root.hi:
+        nodes_to_print.append((self._root.hi, "_hi:", ""))
 
+    while len(nodes_to_print) > 0:
+        node_now, direction, current_spaces = nodes_to_print.pop(0)
+        print(f"{direction}{current_spaces}      char: {node_now.letter}, terminates: {node_now.word_end}")
+        new_spaces = current_spaces + "  "
+        if node_now.hi:
+            nodes_to_print.append((node_now.hi, "_hi:", new_spaces))
+        if node_now.lo:
+            nodes_to_print.append((node_now.lo, "_lo:", new_spaces))
+        if node_now.equal:
+            nodes_to_print.append((node_now.equal, "_eq:", new_spaces))
 
 tst = TernarySearchTree()
 words = ["combine", "combinations", "combination", "combined", "combines","ducks", "ducked", "duck","futile", "futility", "future",
          "fontain", "font","far", "a", "the", "their", "therefor", "there","bomb"]
 words_2 = ["combine", "combinations", "combination", "combined", "combines","ducks", "ducked", "duck","futile", "futility", "future",
          "fontain", "font","far", "a", "the", "their", "therefor", "there","bomb", "cheese", "droog", "comb", "ine", "fut"]
+words_3 = ["combine", "duck", "futile", "font", "there", "bomb"]
 
 for word in words:
-    tst.insert(word)
+  tst.insert(word)
 
 print(f"Length: {tst.len()}")
 print(f"All strings: {sorted(tst.all_strings())}")
 
 for word in words_2:
-    print(f"Search '{word}': {tst.search(word)}")
+  print(f"Search '{word}': {tst.search(word)}")
+
+for word in words_3:
+  tst.delete(word)
+  print(f"Deleted '{word}'")
+
+for word in words_3:
+  print(f"Search '{word}': {tst.search(word)}")
+
+
+tst.print_tst()

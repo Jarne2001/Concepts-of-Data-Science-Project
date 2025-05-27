@@ -1,9 +1,9 @@
 # This Python file contains the code for the implementation of a Ternary Search Tree with an object-oriented approach.
 
-# I suggest making 2 classes: a Ternary Search Tree Node and a Ternary Search Tree with currently 4 functions: insert, search, all_strings and delete (and
-# potentially also a function printing out the tree?)
-
 class TernarySearchTreeNode:
+  """
+  Node used within a Ternary Search Tree, holding one character and up to three child nodes.
+  """
   def __init__(self, letter):
     self.letter = letter
     self.lo = None
@@ -12,6 +12,10 @@ class TernarySearchTreeNode:
     self.word_end = False
 
 class TernarySearchTree:
+  """
+  Ternary Search Tree with support for inserting, searching, deleting, printing, 
+  and listing all stored strings.
+  """
   def __init__(self):
     self._root = None
     self._string_list = []
@@ -25,6 +29,8 @@ class TernarySearchTree:
       self._root = TernarySearchTreeNode(word[index])
     node = self._root
     while index < len(word):
+      if node is None:
+        return
       letter = word[index]
       if letter > node.letter:
         if node.hi is None:
@@ -51,24 +57,16 @@ class TernarySearchTree:
       return []
     return set(self._string_list)
   
-  def all_strings(self):
-    if not self._string_list:
-      print("Tree is empty!")
-      return []
-    return set(self._string_list)
-  
   def search(self, word):
     if not word:
       raise KeyError("No word is given!")
     if self._root is None:
       return False
     node = self._root
-    # vanaf hier zit er een fout in 
     index = 0
-    node = self._root
     
     while len(word) > index:
-      if node.letter != word[0]:
+      if node is None:
         return False
       letter = word[index]
       if letter > node.letter:
@@ -78,8 +76,13 @@ class TernarySearchTree:
         node = node.lo
         continue
       if letter == node.letter:
-        node = node.equal
         index += 1
+        if index == len(word):
+          if node.word_end == False:
+            return False
+          else:
+            return True
+        node = node.equal
         continue
       else:
         return False
@@ -100,6 +103,8 @@ class TernarySearchTree:
     path = []
     node = self._root
     while index < len(word):
+      if node is None:
+        return False
       letter = word[index]
       if letter > node.letter:
         path.append((node, 'hi'))
@@ -111,14 +116,12 @@ class TernarySearchTree:
         continue
       else:
         path.append((node, 'equal'))
-  
         if index == len(word) - 1:
           node.word_end = False
           break
         
         node = node.equal
         index += 1
-        
     while path and not node.lo and not node.hi and not node.equal and not node.word_end:
       i, j = path.pop()
       if j == 'lo':
@@ -130,15 +133,18 @@ class TernarySearchTree:
     node = i
     return True
 
-  def print(self, print):
+  def print_tst(self, print_tst):
     """
     Here comes the print function, textual or visual, which should first display the root, and each time check whether the node has multiple children or one, these should be displayed in the row.
     For each layer, it should be checked each time how many letters it contains.
     """
 
+
 tst = TernarySearchTree()
 words = ["combine", "combinations", "combination", "combined", "combines","ducks", "ducked", "duck","futile", "futility", "future",
          "fontain", "font","far", "a", "the", "their", "therefor", "there","bomb"]
+words_2 = ["combine", "combinations", "combination", "combined", "combines","ducks", "ducked", "duck","futile", "futility", "future",
+         "fontain", "font","far", "a", "the", "their", "therefor", "there","bomb", "cheese", "droog", "comb", "ine", "fut"]
 
 for word in words:
     tst.insert(word)
@@ -146,5 +152,5 @@ for word in words:
 print(f"Length: {tst.len()}")
 print(f"All strings: {sorted(tst.all_strings())}")
 
-for word in words:
-    print(f"Search '{word}': {tst.search(word)}"
+for word in words_2:
+    print(f"Search '{word}': {tst.search(word)}")

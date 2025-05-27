@@ -132,3 +132,16 @@ class TernarySearchTree:
     Here comes the print function, textual or visual, which should first display the root, and each time check whether the node has multiple children or one, these should be displayed in the row.
     For each layer, it should be checked each time how many letters it contains.
     """
+
+tst = TernarySearchTree()
+words = ["combine", "combinations", "combination", "combined", "combines","ducks", "ducked", "duck","futile", "futility", "future",
+         "fontain", "font","far", "a", "the", "their", "therefor", "there","bomb"]
+
+for word in words:
+    tst.insert(word)
+
+print(f"Length: {tst.len()}")
+print(f"All strings: {sorted(tst.all_strings())}")
+
+for word in words:
+    print(f"Search '{word}': {tst.search(word)}"

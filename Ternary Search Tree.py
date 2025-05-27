@@ -76,7 +76,6 @@ class TernarySearchTree:
         continue
       else:
         return False
-    node.word_end = True
     return True
 
   def len(self):

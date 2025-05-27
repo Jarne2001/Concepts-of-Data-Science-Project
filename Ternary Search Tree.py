@@ -119,18 +119,17 @@ class TernarySearchTree:
         if index == len(word) - 1:
           node.word_end = False
           break
-        
         node = node.equal
         index += 1
     while path and not node.lo and not node.hi and not node.equal and not node.word_end:
       i, j = path.pop()
       if j == 'lo':
-        i.lo = None
+          i.lo = None
       elif j == 'hi':
-        i.hi = None
+          i.hi = None
       else:
-        i.equal = None
-    node = i
+          i.equal = None
+      node = i
     return True
 
   def print_tst(self, print_tst):

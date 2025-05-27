@@ -6,7 +6,10 @@
 class TernarySearchTreeNode:
   def __init__(self, letter):
     self.letter = letter
-    self.lo, self.equal, self.hi, self.word_end = None
+    self.lo = None
+    self.equal = None  
+    self.hi = None
+    self.word_end = False
 
 class TernarySearchTree:
   def __init__(self):
@@ -36,7 +39,7 @@ class TernarySearchTree:
       elif letter == node.letter:
         index += 1
         if index == len(word):
-          node.end_word = True
+          node.word_end = True
           return
         if node.equal == None:
           node.equal = TernarySearchTreeNode(word[index])
@@ -130,7 +133,3 @@ class TernarySearchTree:
     Here comes the print function, textual or visual, which should first display the root, and each time check whether the node has multiple children or one, these should be displayed in the row.
     For each layer, it should be checked each time how many letters it contains.
     """
-  
-      
-      
-  

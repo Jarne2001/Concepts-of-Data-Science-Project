@@ -1,4 +1,6 @@
 # This Python file contains the code for the implementation of a Ternary Search Tree with an object-oriented approach.
+import time
+import matplotlib.pyplot as plt
 
 class TernarySearchTreeNode:
   """

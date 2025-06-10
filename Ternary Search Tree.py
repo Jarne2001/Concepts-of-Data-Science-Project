@@ -5,9 +5,12 @@ import matplotlib.pyplot as plt
 class TernarySearchTreeNode:
   """
   Node used within a Ternary Search Tree, holding one character and up to three child nodes.
+  lo = the subtree which holds characters less than this node's characters
+  equal = the subtree has equal characters
+  hi = the subtree of characters which are greater than the character of this node
   """
   def __init__(self, letter):
-    self.letter = letter
+    self.letter = letter # stored character in node
     self.lo = None
     self.equal = None  
     self.hi = None
@@ -16,35 +19,40 @@ class TernarySearchTreeNode:
 class TernarySearchTree:
   """
   Ternary Search Tree with support for inserting, searching, deleting, printing, 
-  and listing all stored strings.
+  and listing all stored strings and the count of stored nodes.
   """
   def __init__(self):
-    self._root = None
+    self._root = None # root node
     self._string_list = []
 
   def insert(self, word):
+    """
+    This function inserts a word into the tree.
+    """
     if not word:
-      raise KeyError("No word is given!")
+      raise KeyError("No word is given!") # if no word is given
     index = 0
-    self._string_list.append(word)
-    if self._root is None:
+    self._string_list.append(word) # keeps a list for word retrieval
+    if self._root is None: # if root is empty, initialize
       self._root = TernarySearchTreeNode(word[index])
     node = self._root
-    while index < len(word):
+    
+    while index < len(word): # traverse the tree according to each character within word
       if node is None:
         return
       letter = word[index]
-      if letter > node.letter:
+      if letter > node.letter: # moves to right subtree
         if node.hi is None:
           node.hi = TernarySearchTreeNode(letter)
         node = node.hi
         continue
-      if letter < node.letter:
+      if letter < node.letter: # move to left subtree
         if node.lo is None:
           node.lo = TernarySearchTreeNode(letter)
         node = node.lo
         continue
-      elif letter == node.letter:
+        
+      elif letter == node.letter: # when character matches
         index += 1
         if index == len(word):
           node.word_end = True
@@ -54,20 +62,27 @@ class TernarySearchTree:
         node = node.equal
 
   def all_strings(self):
+    """
+    This function returns all inserted words into the tree.
+    """
     if not self._string_list:
-      print("Tree is empty!")
+      print("Tree is empty!") # if no words in tree
       return []
     return set(self._string_list)
   
   def search(self, word):
+    """
+    This function searches a full word in the tree. It returns True when
+    the tree contains the word, otherwise False.
+    """
     if not word:
-      raise KeyError("No word is given!")
+      raise KeyError("No word is given!") # if no word is specified
     if self._root is None:
       return False
     node = self._root
     index = 0
     
-    while len(word) > index:
+    while len(word) > index: # traverse each character in word
       if node is None:
         return False
       letter = word[index]
@@ -91,19 +106,26 @@ class TernarySearchTree:
     return True
 
   def len(self):
+    """
+    This function returns the number of words inside the tree
+    """
     if not self._string_list:
       return 0
     return len(self._string_list)
     
   def delete(self, word):
+    """
+    This function deletes a word from the tree
+    """
     if word not in self._string_list:
-      raise KeyError(f"{word} is not in the tree.")
+      raise KeyError(f"{word} is not in the tree.") # if word not present
     elif not word:
-      raise KeyError("No word is given!")
+      raise KeyError("No word is given!") # if no word is given
     index = 0
     self._string_list.remove(word)
     path = []
     node = self._root
+    
     while index < len(word):
       if node is None:
         return False
@@ -123,6 +145,7 @@ class TernarySearchTree:
           break
         node = node.equal
         index += 1
+        
     while path and not node.lo and not node.hi and not node.equal and not node.word_end: # type: ignore
       i, j = path.pop()
       if j == 'lo':
@@ -135,11 +158,15 @@ class TernarySearchTree:
     return True
 
   def print_tst(self):
+    """
+    This function prints the current Ternary Search Tree, with the root and characters 
+    per word
+    """
     if not self._string_list:
       print("Tree is empty!")
       return
     print(f"terminates: {self._root.word_end}")
-    print(f"       char: {self._root.letter}, terminates: {self._root.word_end}")
+    print(f"       char: {self._root.letter}, terminates: {self._root.word_end}") # prints the root details
     nodes_to_print = []
     spaces = "  " 
     if self._root.equal:
@@ -149,7 +176,7 @@ class TernarySearchTree:
     if self._root.hi:
         nodes_to_print.append((self._root.hi, "_hi:", ""))
 
-    while len(nodes_to_print) > 0:
+    while len(nodes_to_print): # traverses the ternary search tree
         node_now, direction, current_spaces = nodes_to_print.pop(0)
         print(f"{direction}{current_spaces}      char: {node_now.letter}, terminates: {node_now.word_end}")
         new_spaces = current_spaces + "  "
@@ -161,6 +188,10 @@ class TernarySearchTree:
             nodes_to_print.append((node_now.equal, "_eq:", new_spaces))
 
 def main():
+  """
+  This function allows to load in a word list into the main Ternary Search Tree
+  function for benchmarking
+  """
     # Load file
     with open('corncob_lowercase.txt', 'r') as file:
         words = [line.strip() for line in file]

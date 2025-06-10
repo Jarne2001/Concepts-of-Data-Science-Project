@@ -200,56 +200,52 @@ def main():
 
     print(f"Loaded {len(words)} words")
     
-    samples = [words[:100], words[:500], words[:1000], words[:2000], words[:5000]]
+    samples = [100, 500, 1000, 2000, 5000]
     
     # Test 1: Insert performance
     nr_runs = 10
-    times = {}
-    insert_sample = words[:20]
-    
-    for sample in samples:
-        tst = TernarySearchTree()
+    insert_performance_times = {}
+
+    for N in samples:
+      sample = words[:N]
+      time = 0
+      for _ in range(nr_runs):
+        tree = TernarySearchTree()
+        start_time = time.time_ns()
         for word in sample:
-            tst.insert(word)
-        times[len(sample)] = 0.0
-        
-        for _ in range(nr_runs):
-            start_time = time.time_ns()
-            for word in insert_sample:
-                tst.insert(word)
-            end_time = time.time_ns()
-            times[len(sample)] += end_time - start_time
-        times[len(sample)] /= nr_runs * 1_000_000.0
+          tree.insert(word)
+        end_time = time.time_ns()
+        time += end_time - start_time
+      insert_performance_times[N] = (time / nr_runs) * 1_000_000.0
     
-    print(f"Insert times: {times}")     
+    print(f"Insert times: {insert_performance_times}")     
     plt.figure()
-    plt.plot(times.keys(), times.values())
+    plt.plot(insert_performance_times.keys(), insert_performance_times.values())
     plt.title("Insert Performance")
     plt.xlabel("Tree size")
     plt.ylabel("Time (ms)")
     plt.savefig('insert_performance.png')
     
     # Test 2: Search performance
-    times = {}
-    search_sample = words[:20]
+    search_performance_times = {}
     
-    for sample in samples:
-        tst = TernarySearchTree()
+    for N in samples:
+      sample = words[:N]
+      tree = TernarySearchTree()
+      for word in sample:
+        tree.insert(word)
+      time = 0
+      for _ in range(nr_runs):
+        start_time = time.time_ns()
         for word in sample:
-            tst.insert(word)
-        times[len(sample)] = 0.0
-        
-        for _ in range(nr_runs):
-            start_time = time.time_ns()
-            for word in search_sample:
-                tst.search(word)
-            end_time = time.time_ns()
-            times[len(sample)] += end_time - start_time
-        times[len(sample)] /= nr_runs * 1_000_000.0
+          tree.search(word)
+        end_time = time.time_ns()
+        time += end_time - start_time
+      search_performance_times[N] = (time / nr_runs) * 1_000_000.0
       
-    print(f"Search times: {times}")
+    print(f"Search times: {search_performance_times}")
     plt.figure()
-    plt.plot(times.keys(), times.values())
+    plt.plot(search_performance_times.keys(), search_performance_times.values())
     plt.title("Search Performance")
     plt.xlabel("Tree size")
     plt.ylabel("Time (ms)")

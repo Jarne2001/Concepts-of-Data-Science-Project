@@ -190,10 +190,10 @@ class TernarySearchTree:
             nodes_to_print.append((node_now.equal, "_eq:", new_spaces))
 
 def main():
-  """
-  This function allows to load in a word list into the main Ternary Search Tree
-  function for benchmarking.
-  """
+    """
+    This function allows to load in a word list into the main Ternary Search Tree
+    function for benchmarking.
+    """
     # Load file
     with open('corncob_lowercase.txt', 'r') as file:
         words = [line.strip() for line in file]
@@ -208,15 +208,15 @@ def main():
 
     for N in samples:
       sample = words[:N]
-      time = 0
+      measuring_time = 0
       for _ in range(nr_runs):
         tree = TernarySearchTree()
         start_time = time.time_ns()
         for word in sample:
           tree.insert(word)
         end_time = time.time_ns()
-        time += end_time - start_time
-      insert_performance_times[N] = (time / nr_runs) * 1_000_000.0
+        measuring_time += end_time - start_time
+      insert_performance_times[N] = (measuring_time / nr_runs) * 1_000_000.0
     
     print(f"Insert times: {insert_performance_times}")     
     plt.figure()
@@ -234,14 +234,14 @@ def main():
       tree = TernarySearchTree()
       for word in sample:
         tree.insert(word)
-      time = 0
+      measuring_time = 0
       for _ in range(nr_runs):
         start_time = time.time_ns()
         for word in sample:
           tree.search(word)
         end_time = time.time_ns()
-        time += end_time - start_time
-      search_performance_times[N] = (time / nr_runs) * 1_000_000.0
+        measuring_time += end_time - start_time
+      search_performance_times[N] = (measuring_time / nr_runs) * 1_000_000.0
       
     print(f"Search times: {search_performance_times}")
     plt.figure()

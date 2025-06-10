@@ -1,1 +1,36 @@
+A Ternary Search Tree stores strings through its nodes, allowing a fast finding of words. A node of a Ternary Search Tree contains one letter (character) of a word, and 
+has 3 children: lo (characters less than the current node (character)), hi (characters higher than the current node (character)) and equal (characters that start with current node). 3 
+cases can be expected for each function: best case, average case, worst case.
+
+The time and space complexity of this Ternary Search Tree implementation can be understood by examining its functions insert, search and delete, each 
+of which processes one input word (length L) by traversing up to L nodes via three-way comparisons of each node's 3 children: lo, equal and hi, and by 
+considering the space/memory used to store N words of total characters S. When inserting a word of length L, in the best case existing equal links all the 
+way down (Ternary Search Trees run fastest when given similar strings, even more when those strings share a same prefix), paying O(L) time and allocating O(L) new nodes only if the tree was empty; in the average case, traversals at each character cause an 
+additional O(log N) cost, which gives O(L + log N) time and a small amount of new nodes for any suffix character that is not already present in the 
+tree; in the worst case, a fully degenerate chain of hi pointers of length O(N)—each of the L steps can cost O(N), 
+for O(L + N) time, though we still allocate at most L new nodes. Searching shows these costs (O(L) best, O(L + log N) average, O(L + N) worst) but 
+uses O(1) extra space. Deletion first traverses as in search to unmark the final node (same O(L + log N) average cost), then walks back up 
+the saved path, removing any now‐useless nodes (previous ones removed, so these have to be removed as well); this cleanup adds at most O(L) work but 
+never more than the traversal cost.
+
+Listing all stored words returns a set made from the internal list of size N—O(N) time and space, while reporting the count is an O(1) 
+operation. Altogether, our data structures occupy O(N + S) space: O(N) from the Python list of words and O(S) from the individual Ternary Search Tree nodes
+(one per character, minus any sharing of common prefixes). The words sharing the same prefixes take in less space (nodes) of the tree, where the 
+total amount of used nodes are the sum of all the unique characters in words.
+
+In summary, each function costs linear time in the length of the word under ideal conditions (best cases), gains a logarithmic penalty in balanced cases, and 
+can degrade to linear in the total number of stored words in the worst case; overall space grows in proportion to both the number of words and total characters inserted.
+
+# Comparison with b-tree
+
+A Ternary Search Tree (TST) stores exactly one character per node and uses three children: lo, equal and hi, which makes it ideal for in-memory string 
+dictionaries, prefix lookups, auto-completion, and spell checking; however, its height can grow with insertion order and shared prefixes, 
+yielding a best-case time of O(L) for a length-L key but degrading to O(L + N) in worst cases. 
+
+A well-balanced B-Tree, by contrast, packs many keys into each node (up to m – 1 keys and m children) sized to 
+efficient disk usage, automatically splits and merges to keep all nodes at equal depth and height and consistently delivers search, insert, and delete performance.
+
+a Ternary Search Tree is often faster and more memory-efficient than a naïve binary-treebecause it shares prefixes 
+and avoids large per-node arrays, but it usually consumes more memory per stored string than a tightly packed B-Tree node optimized for 
+page-sized storage; for large datasets, B-Trees outperform Ternary Search Trees both in speed and overall memory usage.
 

@@ -6,3 +6,4 @@
 #SBATCH --time=00:10:00
 
 time python ternary_search_tree.py
+# add python version

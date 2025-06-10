@@ -32,7 +32,10 @@ class TernarySearchTree:
     This function inserts a word into the tree.
     """
     if not word:
-      raise KeyError("No word is given!") # if no word is given
+      raise ValueError("Empty string cannot be given!") # if no word is given
+    if not isinstance(word, str):
+      raise TypeError("Only words of the string instance are allowed!")
+    word = word.lower()
     index = 0
     self._string_list.append(word) # keeps a list for word retrieval
     if self._root is None: # if root is empty, initialize
@@ -200,7 +203,7 @@ def main():
 
     print(f"Loaded {len(words)} words")
     
-    samples = [100, 500, 1000, 2000, 5000]
+    samples = [100, 500, 1000, 2000, 5000, 10000, 50000]
     
     # Test 1: Insert performance
     nr_runs = 10
@@ -225,6 +228,7 @@ def main():
     plt.xlabel("Tree size")
     plt.ylabel("Time (ms)")
     plt.savefig('insert_performance.png')
+    plt.close()
     
     # Test 2: Search performance
     search_performance_times = {}
@@ -250,6 +254,7 @@ def main():
     plt.xlabel("Tree size")
     plt.ylabel("Time (ms)")
     plt.savefig('search_performance.png')
+    plt.close()
     print("Search done")
   
 if __name__ == "__main__":

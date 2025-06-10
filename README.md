@@ -7,7 +7,7 @@ The repository consists of the following files:
 
 - **Binary Tree.py**: Given Binary Search Tree implementation, needed for comparison purposes.  
 - **Ternary Search Tree.py**: Actual implementation of the Ternary Search Tree.  
-- **corncob_lowercase.txt**: English dictionary of 50,000 lowercase words ((http://www.mieliestronk.com/corncob_lowercase.txt)).  
+- **corncob_lowercase.txt**: English dictionary of 50,000 lowercase words (http://www.mieliestronk.com/corncob_lowercase.txt).  
 - **insert_words-checkpoint.txt**: File containing checkpoints for the insert_words.txt file.  
 - **insert_words.txt**: Given test words to test the Ternary Search Tree.  
 - **job script**: Job script to run benchmarking on the HPC infrastructure.  
@@ -16,6 +16,8 @@ The repository consists of the following files:
 - **project_2024_2025.docx**: Project description from the Concepts of Data Science course.  
 - **time_complexity_discuss**: A written discussion of expected time and space complexity.  
 - **time_plots**: Time plots showing performance metrics for the tree implementation.
+
+# Conclusions
 
 
 

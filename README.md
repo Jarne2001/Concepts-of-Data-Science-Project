@@ -15,7 +15,7 @@ The repository consists of the following files:
 - **not_insert_words.txt**: Words not inserted into the tree, used to validate negative search cases.  
 - **project_2024_2025.docx**: Project description from the Concepts of Data Science course.  
 - **time_complexity_discuss**: A written discussion of expected time and space complexity.  
-- **time_plots**: Time plots showing performance metrics for the tree implementation.
+- **time_plots.py**: Time plots showing performance metrics for the tree implementation.
 
 # Conclusions
 

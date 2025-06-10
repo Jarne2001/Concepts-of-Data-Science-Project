@@ -221,6 +221,7 @@ def main():
     plt.xlabel("Tree size")
     plt.ylabel("Time (ms)")
     plt.savefig('search_performance.png')
-    
+    print("Search done")
+  
 if __name__ == "__main__":
     main()

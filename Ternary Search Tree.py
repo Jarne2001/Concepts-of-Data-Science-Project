@@ -2,6 +2,7 @@
 This Python file contains the code for the implementation of a Ternary Search Tree with an object-oriented approach.
 """
 import time
+import random
 import matplotlib.pyplot as plt
 
 class TernarySearchTreeNode:
@@ -207,6 +208,7 @@ def main():
     
     # Test 1: Insert performance
     nr_runs = 10
+    words = random.shuffle(words)
     insert_performance_times = {}
 
     for N in samples:

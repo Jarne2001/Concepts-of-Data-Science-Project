@@ -8,5 +8,4 @@
 module load Python/3.11.3-GCCcore-12.3.0
 module load matplotlib/3.7.0-gfbf-2023a
 
-time python ternary_search_tree_hpc.py
-# add python version
+time python ternary_search_tree.py # add python version

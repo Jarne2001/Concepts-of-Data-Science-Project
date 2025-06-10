@@ -160,28 +160,67 @@ class TernarySearchTree:
         if node_now.equal:
             nodes_to_print.append((node_now.equal, "_eq:", new_spaces))
 
-tst = TernarySearchTree()
-words = ["combine", "combinations", "combination", "combined", "combines","ducks", "ducked", "duck","futile", "futility", "future",
-         "fontain", "font","far", "a", "the", "their", "therefor", "there","bomb"]
-words_2 = ["combine", "combinations", "combination", "combined", "combines","ducks", "ducked", "duck","futile", "futility", "future",
-         "fontain", "font","far", "a", "the", "their", "therefor", "there","bomb", "cheese", "droog", "comb", "ine", "fut"]
-words_3 = ["combine", "duck", "futile", "font", "there", "bomb"]
+def main():
+    # Load file
+    with open('corncob_lowercase.txt', 'r') as file:
+        words = [line.strip() for line in file]
 
-for word in words:
-  tst.insert(word)
-
-print(f"Length: {tst.len()}")
-print(f"All strings: {sorted(tst.all_strings())}")
-
-for word in words_2:
-  print(f"Search '{word}': {tst.search(word)}")
-
-for word in words_3:
-  tst.delete(word)
-  print(f"Deleted '{word}'")
-
-for word in words_3:
-  print(f"Search '{word}': {tst.search(word)}")
-
-
-tst.print_tst()
+    print(f"Loaded {len(words)} words")
+    
+    samples = [words[:100], words[:500], words[:1000], words[:2000], words[:5000]]
+    
+    # Test 1: Insert performance
+    nr_runs = 10
+    times = {}
+    insert_sample = words[:20]
+    
+    for sample in samples:
+        tst = TernarySearchTree()
+        for word in sample:
+            tst.insert(word)
+        times[len(sample)] = 0.0
+        
+        for _ in range(nr_runs):
+            start_time = time.time_ns()
+            for word in insert_sample:
+                tst.insert(word)
+            end_time = time.time_ns()
+            times[len(sample)] += end_time - start_time
+        times[len(sample)] /= nr_runs * 1_000_000.0
+    
+    print(f"Insert times: {times}")     
+    plt.figure()
+    plt.plot(times.keys(), times.values())
+    plt.title("Insert Performance")
+    plt.xlabel("Tree size")
+    plt.ylabel("Time (ms)")
+    plt.savefig('insert_performance.png')
+    
+    # Test 2: Search performance
+    times = {}
+    search_sample = words[:20]
+    
+    for sample in samples:
+        tst = TernarySearchTree()
+        for word in sample:
+            tst.insert(word)
+        times[len(sample)] = 0.0
+        
+        for _ in range(nr_runs):
+            start_time = time.time_ns()
+            for word in search_sample:
+                tst.search(word)
+            end_time = time.time_ns()
+            times[len(sample)] += end_time - start_time
+        times[len(sample)] /= nr_runs * 1_000_000.0
+      
+    print(f"Search times: {times}")
+    plt.figure()
+    plt.plot(times.keys(), times.values())
+    plt.title("Search Performance")
+    plt.xlabel("Tree size")
+    plt.ylabel("Time (ms)")
+    plt.savefig('search_performance.png')
+    
+if __name__ == "__main__":
+    main()

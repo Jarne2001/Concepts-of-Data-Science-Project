@@ -2,8 +2,11 @@
 #SBATCH --account=lp_h_ds_students
 #SBATCH --cluster=genius
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=2G
-#SBATCH --time=00:10:00
+#SBATCH --mem=4G
+#SBATCH --time=00:20:00
 
-time python ternary_search_tree.py
+module load Python/3.11.3-GCCcore-12.3.0
+module load matplotlib/3.7.0-gfbf-2023a
+
+time python ternary_search_tree_hpc.py
 # add python version

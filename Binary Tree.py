@@ -1,3 +1,7 @@
+import time
+import random
+import matplotlib.pyplot as plt
+
 class BtreeNode:
     
     def __init__(self, string):
@@ -88,3 +92,230 @@ class Btree:
             return 'empty tree'
         else:
             return self._root._to_string('')
+
+def main():
+    """
+    This function allows to load in a word list into the main Binary Search Tree
+    function for benchmarking.
+    """
+    # Load file
+    with open('corncob_lowercase.txt', 'r') as file:
+        words = [line.strip() for line in file]
+
+    print(f"Loaded {len(words)} words")
+    
+    samples = [100, 500, 1000, 2000, 5000, 10000, 50000]
+    
+    # Test 1: Insert performance
+    nr_runs = 10
+    words = random.shuffle(words) # randomize word order to prevent skewed Btree
+    insert_performance_times = {}
+
+    for N in samples:
+      sample = words[:N]
+      measuring_time = 0
+      for _ in range(nr_runs):
+        btree = Btree()
+        start_time = time.time_ns()
+        for word in sample:
+          btree.insert(word)
+        end_time = time.time_ns()
+        measuring_time += end_time - start_time
+      insert_performance_times[N] = (measuring_time / nr_runs) * 1_000_000.0
+    
+    print(f"Insert times: {insert_performance_times}")     
+    plt.figure()
+    plt.plot(insert_performance_times.keys(), insert_performance_times.values())
+    plt.title("Insert Performance")
+    plt.xlabel("Tree size")
+    plt.ylabel("Time (ms)")
+    plt.savefig('insert_performance.png')
+    plt.close()
+    
+    # Test 2: Search performance
+    search_performance_times = {}
+    
+    for N in samples:
+      sample = words[:N]
+      btree = Btree()
+      for word in sample:
+        btree.insert(word)
+      measuring_time = 0
+      for _ in range(nr_runs):
+        start_time = time.time_ns()
+        for word in sample:
+          btree.search(word)
+        end_time = time.time_ns()
+        measuring_time += end_time - start_time
+      search_performance_times[N] = (measuring_time / nr_runs) * 1_000_000.0
+      
+    print(f"Search times: {search_performance_times}")
+    plt.figure()
+    plt.plot(search_performance_times.keys(), search_performance_times.values())
+    plt.title("Search Performance")
+    plt.xlabel("Tree size")
+    plt.ylabel("Time (ms)")
+    plt.savefig('search_performance.png')
+    plt.close()
+    print("Search done")
+  
+if __name__ == "__main__":
+    main()
+class BtreeNode:
+    
+    def __init__(self, string):
+        self._string = string
+        self._lt, self._gt = None, None
+
+    def _insert(self, string):
+        if string == self._string:
+            return
+        if string < self._string:
+            if self._lt is None:
+                self._lt = BtreeNode(string)
+            else:
+                self._lt._insert(string)
+        elif string > self._string:
+            if self._gt is None:
+                self._gt = BtreeNode(string)
+            else:
+                self._gt._insert(string)
+    
+    def _search(self, string):
+        if string == self._string:
+            return True
+        elif string < self._string:
+            return self._lt is not None and self._lt._search(string)
+        else:
+            return self._gt is not None and self._gt._search(string)
+    
+    def _all_strings(self):
+        strings = [self._string]
+        if self._lt is not None:
+            strings.extend(self._lt._all_strings())
+        if self._gt is not None:
+            strings.extend(self._gt._all_strings())
+        return strings
+
+    def __len__(self):
+        length = 1
+        if self._lt is not None:
+            length += len(self._lt)
+        if self._gt is not None:
+            length += len(self._gt)
+        return length
+
+    def _to_string(self, indent=''):
+        repr_str = indent + repr(self)
+        if self._lt is not None:
+            repr_str += '\n' + self._lt._to_string(indent + '  ')
+        if self._gt is not None:
+            repr_str += '\n' + self._gt._to_string(indent + '  ')
+        return repr_str
+
+    def __repr__(self):
+        return self._string
+
+
+class Btree:
+    
+    def __init__(self):
+        self._root = None
+        
+    def insert(self, string):
+        if self._root is None:
+            self._root = BtreeNode(string)
+        else:
+            self._root._insert(string)
+
+    def search(self, string):
+        if self._root is None:
+            return False
+        else:
+            return self._root._search(string)
+        
+    def all_strings(self):
+        if self._root is None:
+            return []
+        else:
+            return self._root._all_strings()
+        
+    def __len__(self):
+        if self._root is None:
+            return 0
+        else:
+            return len(self._root)
+    
+    def __repr__(self):
+        if self._root is None:
+            return 'empty tree'
+        else:
+            return self._root._to_string('')
+
+def main():
+    """
+    This function allows to load in a word list into the main Binary Search Tree
+    function for benchmarking.
+    """
+    # Load file
+    with open('corncob_lowercase.txt', 'r') as file:
+        words = [line.strip() for line in file]
+
+    print(f"Loaded {len(words)} words")
+    
+    samples = [100, 500, 1000, 2000, 5000, 10000, 50000]
+    
+    # Test 1: Insert performance
+    nr_runs = 10
+    insert_performance_times = {}
+
+    for N in samples:
+      sample = words[:N]
+      measuring_time = 0
+      for _ in range(nr_runs):
+        btree = Btree()
+        start_time = time.time_ns()
+        for word in sample:
+          btree.insert(word)
+        end_time = time.time_ns()
+        measuring_time += end_time - start_time
+      insert_performance_times[N] = (measuring_time / nr_runs) * 1_000_000.0
+    
+    print(f"Insert times: {insert_performance_times}")     
+    plt.figure()
+    plt.plot(insert_performance_times.keys(), insert_performance_times.values())
+    plt.title("Insert Performance")
+    plt.xlabel("Tree size")
+    plt.ylabel("Time (ms)")
+    plt.savefig('insert_performance.png')
+    plt.close()
+    
+    # Test 2: Search performance
+    search_performance_times = {}
+    
+    for N in samples:
+      sample = words[:N]
+      btree = Btree()
+      for word in sample:
+        btree.insert(word)
+      measuring_time = 0
+      for _ in range(nr_runs):
+        start_time = time.time_ns()
+        for word in sample:
+          btree.search(word)
+        end_time = time.time_ns()
+        measuring_time += end_time - start_time
+      search_performance_times[N] = (measuring_time / nr_runs) * 1_000_000.0
+      
+    print(f"Search times: {search_performance_times}")
+    plt.figure()
+    plt.plot(search_performance_times.keys(), search_performance_times.values())
+    plt.title("Search Performance")
+    plt.xlabel("Tree size")
+    plt.ylabel("Time (ms)")
+    plt.savefig('search_performance.png')
+    plt.close()
+    print("Search done")
+  
+if __name__ == "__main__":
+    main()

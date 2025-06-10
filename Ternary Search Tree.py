@@ -1,13 +1,15 @@
-# This Python file contains the code for the implementation of a Ternary Search Tree with an object-oriented approach.
+"""
+This Python file contains the code for the implementation of a Ternary Search Tree with an object-oriented approach.
+"""
 import time
 import matplotlib.pyplot as plt
 
 class TernarySearchTreeNode:
   """
   Node used within a Ternary Search Tree, holding one character and up to three child nodes.
-  lo = the subtree which holds characters less than this node's characters
-  equal = the subtree has equal characters
-  hi = the subtree of characters which are greater than the character of this node
+  lo = the subtree which holds characters less than this node's characters.
+  equal = the subtree has equal characters.
+  hi = the subtree of characters which are greater than the character of this node.
   """
   def __init__(self, letter):
     self.letter = letter # stored character in node
@@ -107,7 +109,7 @@ class TernarySearchTree:
 
   def len(self):
     """
-    This function returns the number of words inside the tree
+    This function returns the number of words inside the tree.
     """
     if not self._string_list:
       return 0
@@ -160,7 +162,7 @@ class TernarySearchTree:
   def print_tst(self):
     """
     This function prints the current Ternary Search Tree, with the root and characters 
-    per word
+    per word.
     """
     if not self._string_list:
       print("Tree is empty!")
@@ -190,7 +192,7 @@ class TernarySearchTree:
 def main():
   """
   This function allows to load in a word list into the main Ternary Search Tree
-  function for benchmarking
+  function for benchmarking.
   """
     # Load file
     with open('corncob_lowercase.txt', 'r') as file:

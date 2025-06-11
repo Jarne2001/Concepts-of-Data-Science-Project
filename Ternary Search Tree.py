@@ -193,71 +193,95 @@ class TernarySearchTree:
         if node_now.equal:
             nodes_to_print.append((node_now.equal, "_eq:", new_spaces))
 
+def best_case(words):
+    """
+    This function builds a list of words for the best case with
+    the words forming a balanced tree as much as possible.
+    """
+    words = sorted(words)
+    best_words = []
+    stack = [(0, len(words)-1)]
+    while len(stack) >0:
+        item = stack.pop(0)
+        lo = item[0]
+        hi = item[1]
+        if hi >= lo:
+          median = (lo + hi) // 2
+          stack.append((lo, median-1))
+          stack.append((median+1, hi))
+          best_words.append(words[median])
+        else:
+          continue
+    return best_words
+
 def main():
-    """
-    This function allows to load in a word list into the main Ternary Search Tree
-    function for benchmarking.
-    """
-    # Load file
-    with open('corncob_lowercase.txt', 'r') as file:
+    with open('insert_words.txt', 'r') as file:
         words = [line.strip() for line in file]
 
     print(f"Loaded {len(words)} words")
-    
     samples = [100, 500, 1000, 2000, 5000, 10000, 50000]
-    
-    # Test 1: Insert performance
     nr_runs = 10
-    words = random.shuffle(words)
-    insert_performance_times = {}
 
-    for N in samples:
-      sample = words[:N]
-      measuring_time = 0
-      for _ in range(nr_runs):
+    word_cases = {'best case': best_case(words),
+        'average case': random.shuffle(words),  # random shuffling of words
+        'worst case': sorted(words)} # original word (already ordered alphabetically)
+
+    insert_times = {case: {} for case in word_cases}
+
+    for case, words in word_cases.items():
+        for N in samples:
+            sample = words[:N]
+            total_ns = 0
+            for _ in range(nr_runs):
+                tree = TernarySearchTree()
+                measurement_time = time.time_ns()
+                for w in sample:
+                    tree.insert(w)
+                total_ns += time.time_ns() - measurement_time
+            insert_times[case][N] = (total_ns / nr_runs) / 1_000_000
+
+    print("Insert times (ms):")
+    for case in insert_times:
+        print(f"{case}: {insert_times[case]}")
+    plt.figure()
+    for case, time in insert_times.items():
+        plt.plot(list(time.keys()), list(time.values()), label=case)
+    plt.title("Insert Performance: Best Case vs Average Case vs Worst Case")
+    plt.xlabel("Tree size")
+    plt.ylabel("Time (ms)")
+    plt.legend()
+    plt.savefig('insert_comparison.png')
+    plt.close()
+    
+    search_times = {case: {} for case in word_cases}
+
+    for case, words in word_cases.items():
         tree = TernarySearchTree()
-        start_time = time.time_ns()
-        for word in sample:
-          tree.insert(word)
-        end_time = time.time_ns()
-        measuring_time += end_time - start_time
-      insert_performance_times[N] = (measuring_time / nr_runs) * 1_000_000.0
-    
-    print(f"Insert times: {insert_performance_times}")     
+        for w in words[:samples[-1]]:
+            tree.insert(w)
+        for N in samples:
+            sample = words[:N]
+            total_ns = 0
+            for _ in range(nr_runs):
+                measurement_time = time.time_ns()
+                for w in sample:
+                    tree.search(w)
+                total_ns += time.time_ns() - measurement_time
+            search_times[case][N] = (total_ns / nr_runs) / 1_000_000
+
+    print("\nSearch times (ms):")
+    for case in search_times:
+        print(f"{case}: {search_times[case]}")
+
     plt.figure()
-    plt.plot(insert_performance_times.keys(), insert_performance_times.values())
-    plt.title("Insert Performance")
+    for case, time in search_times.items():
+        plt.plot(list(time.keys()), list(time.values()), label=case)
+    plt.title("Search Performance: Best Case vs Average Case vs Worst Case")
     plt.xlabel("Tree size")
     plt.ylabel("Time (ms)")
-    plt.savefig('insert_performance.png')
+    plt.legend()
+    plt.savefig('search_comparison.png')
     plt.close()
-    
-    # Test 2: Search performance
-    search_performance_times = {}
-    
-    for N in samples:
-      sample = words[:N]
-      tree = TernarySearchTree()
-      for word in sample:
-        tree.insert(word)
-      measuring_time = 0
-      for _ in range(nr_runs):
-        start_time = time.time_ns()
-        for word in sample:
-          tree.search(word)
-        end_time = time.time_ns()
-        measuring_time += end_time - start_time
-      search_performance_times[N] = (measuring_time / nr_runs) * 1_000_000.0
-      
-    print(f"Search times: {search_performance_times}")
-    plt.figure()
-    plt.plot(search_performance_times.keys(), search_performance_times.values())
-    plt.title("Search Performance")
-    plt.xlabel("Tree size")
-    plt.ylabel("Time (ms)")
-    plt.savefig('search_performance.png')
-    plt.close()
-    print("Search done")
-  
+
 if __name__ == "__main__":
     main()

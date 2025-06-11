@@ -234,13 +234,13 @@ def main():
     for case, words in word_cases.items():
         for N in samples:
             sample = words[:N]
-            total_ns = 0
+            total_time = 0
             for _ in range(nr_runs):
                 tree = TernarySearchTree()
                 measurement_time = time.time_ns()
                 for w in sample:
                     tree.insert(w)
-                total_ns += time.time_ns() - measurement_time
+                total_time += time.time_ns() - measurement_time
             insert_times[case][N] = (total_ns / nr_runs) / 1_000_000
 
     print("Insert times (ms):")
@@ -264,12 +264,12 @@ def main():
             tree.insert(w)
         for N in samples:
             sample = words[:N]
-            total_ns = 0
+            total_time = 0
             for _ in range(nr_runs):
                 measurement_time = time.time_ns()
                 for w in sample:
                     tree.search(w)
-                total_ns += time.time_ns() - measurement_time
+                total_time += time.time_ns() - measurement_time
             search_times[case][N] = (total_ns / nr_runs) / 1_000_000
 
     print("\nSearch times (ms):")

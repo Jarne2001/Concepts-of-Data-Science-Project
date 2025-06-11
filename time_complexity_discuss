@@ -1,25 +1,54 @@
-A Ternary Search Tree stores strings through its nodes, allowing a fast finding of words. A node of a Ternary Search Tree contains one letter (character) of a word, and 
-has 3 children: lo (characters less than the current node (character)), hi (characters higher than the current node (character)) and equal (characters that start with current node). 3 
-cases can be expected for each function: best case, average case, worst case.
+# Expected time and space complexity
+In a ternary search tree, functions like search, insert, or delete on a word of length k (k characters of a string) in a tree holding n 
+(n is total number of stored words) words have clearly defined performance bounds. In the best case, when the tree is perfectly balanced and each 
+character comparison immediately follows the “equal” child the time complexity is O(k). In more typical conditions with randomized 
+strings, the time complexity becomes O(log n + k), because perform a small number of left and right comparisons are made (logarithmic in the number of stored 
+words) plus one middle‑child step for each character. However, in the worst case, such as when words are inserted in sorted order and the tree degenerates 
+into a very long chain each tree step can take O(n + k) time, as each character search may traverse nearly all nodes before continuing to the next character 
+(en.wikipedia.org).
+Regarding space complexity, a ternary search tree uses one node per character of all the words it stores, and each node holds three children plus a character and 
+a small flag. Thus the total space required is O(n × k), proportional to the summed length of all words the tree contains. Since this implementation uses an 
+iterative approach, it is expected to go faster as well.
+Summarized, a word of length k in a ternary search tree of n words, it performs in O(k) time in the best case, O(log n + k) in the average case, 
+and O(n + k) in the worst case, while using O(n × k) memory.
 
-The time and space complexity of this Ternary Search Tree implementation can be understood by examining its functions insert, search and delete, each 
-of which processes one input word (length L) by traversing up to L nodes via three-way comparisons of each node's 3 children: lo, equal and hi, and by 
-considering the space/memory used to store N words of total characters S. When inserting a word of length L, in the best case existing equal links all the 
-way down (Ternary Search Trees run fastest when given similar strings, even more when those strings share a same prefix), paying O(L) time and allocating O(L) new nodes only if the tree was empty; in the average case, traversals at each character cause an 
-additional O(log N) cost, which gives O(L + log N) time and a small amount of new nodes for any suffix character that is not already present in the 
-tree; in the worst case, a fully degenerate chain of hi pointers of length O(N)—each of the L steps can cost O(N), 
-for O(L + N) time, though we still allocate at most L new nodes. Searching shows these costs (O(L) best, O(L + log N) average, O(L + N) worst) but 
-uses O(1) extra space. Deletion first traverses as in search to unmark the final node (same O(L + log N) average cost), then walks back up 
-the saved path, removing any now‐useless nodes (previous ones removed, so these have to be removed as well); this cleanup adds at most O(L) work but 
-never more than the traversal cost.
+# Plots discussion
+In this implementation, the best case is defined by splitting a word list with a median-approach to make the tree as perfectly balanced as possible. 
+Each character node more or less splits its “less than” and “greater than” branches evenly. Searching any word of length k simply follows the middle 
+links k times, giving O(k) time. The average case is defined by inserting words in a random order, so that the tree stays roughly balanced on average. 
+The search function then spends a small amount of time doing binary‐search-style left/right comparisons (about O(log n) overall) before following the k 
+middle links, for a total of O(log n + k). The worst case is defined by sorting the word list alphabetically. Every new word is placed onto one side 
+of the tree, turning it into a long chain. Searching then may scan through up to n nodes at each character before continuing to the next node, so in 
+the worst case there is O(n+k) time.
 
-Listing all stored words returns a set made from the internal list of size N—O(N) time and space, while reporting the count is an O(1) 
-operation. Altogether, our data structures occupy O(N + S) space: O(N) from the Python list of words and O(S) from the individual Ternary Search Tree nodes
-(one per character, minus any sharing of common prefixes). The words sharing the same prefixes take in less space (nodes) of the tree, where the 
-total amount of used nodes are the sum of all the unique characters in words.
+# Insert function performance time
+When the performance time for the insert function is plotted against the number of words already in the tree, three mostly straight lines are observed, 
+with one for each insertion in a case (Fig. 1). In theory, “best-case” inserts should cost O(k) time and therefore stay flat as the tree grows; "average-case" 
+should cost O(log n + k), rising only very slowly (logarithmically) with n; and “worst-case” should cost O(n + k), rising in direct proportion to the tree size.
+The worst-case curve behaves exactly as expected: it climbs steeply and linearly, so inserting into a degenerate, one-sided tree takes time proportional to n. 
+It is also the curve that has the longest performance time as expected. The best-case curve, by contrast, does not stay perfectly flat but slopes mostly upward. 
+This can be explained because always following the middle child still causes each character comparison to do left and right children checking, which becomes more 
+time-expensive as the tree grows. The average-case line ends up looking almost linear too, rather than an expected logarithmic bend. That tells the "random" 
+word-list insertion order did not keep the implemented tree balanced enough in practice. Each insert paid more and more left and right traversals as n grew, so 
+the cost crept closer to O(n) than to O(log n). It could also be because at n = 50000 there is a very small logarithmic increase compared to n rising by 10000’s, 
+and this growth looks constant on a millisecond-scale Y-axis. Over the entire 50000 range is only a small increase.
 
-In summary, each function costs linear time in the length of the word under ideal conditions (best cases), gains a logarithmic penalty in balanced cases, and 
-can degrade to linear in the total number of stored words in the worst case; overall space grows in proportion to both the number of words and total characters inserted.
+In summary, the three curves do preserve the order best < average < worst, but only the worst-case truly matches its theoretical slope. This is because actual 
+words and suboptimal tree balancing make even the "best" and "average" lines pick up an n-dependence that theory would normally attribute only to the worst scenario.
+
+# Search function performance time
+The plot with search time against tree size, all three best, average and worst curves rise almost perfectly linearly, even though theory says best-case should 
+be O(k) (flat) and average-case should be O(log n + k) (very slowly rising). This could also be because the average case with random inserts could still produce 
+some skew, causing the tree to not be perfectly randomly balanced and thus the performance approaching more O(n+k). Also the logarithmic growth might be very small on a large plot scale like here. 
+As for the best case scenario searching a character still involves the tree checking the lo and hi children with each step. As the tree grows, these nodes take 
+up RAM and tree traversals become slower, still causing a linear slope as well.
+
+In short, the theoretical k- or log-shaped curves are masked by the large scale, slightly skewed word list, lo and hi-checking and imperfect balancing, 
+so all three measured search times march upward in proportion to the size of the ternary search tree.
+
+# References:
+Bentley, J. L., & Sedgewick, R. (1997). Ternary search trees. Dr. Dobb’s Journal, 22(4), 20–26. Retrieved from https://www.drdobbs.com/database/ternary-search-trees/184410528
+Wikipedia contributors. (2024). Ternary search tree. In Wikipedia, The Free Encyclopedia. Retrieved June 11, 2025, from https://en.wikipedia.org/wiki/Ternary_search_tree
 
 # Comparison with b-tree
 
@@ -30,7 +59,7 @@ yielding a best-case time of O(L) for a length-L key but degrading to O(L + N) i
 A well-balanced B-Tree, by contrast, packs many keys into each node (up to m – 1 keys and m children) sized to 
 efficient disk usage, automatically splits and merges to keep all nodes at equal depth and height and consistently delivers search, insert, and delete performance.
 
-a Ternary Search Tree is often faster and more memory-efficient than a naïve binary-treebecause it shares prefixes 
+a Ternary Search Tree is often faster and more memory-efficient than a naïve binary-tree because it shares prefixes 
 and avoids large per-node arrays, but it usually consumes more memory per stored string than a tightly packed B-Tree node optimized for 
 page-sized storage; for large datasets, B-Trees outperform Ternary Search Trees both in speed and overall memory usage.
 

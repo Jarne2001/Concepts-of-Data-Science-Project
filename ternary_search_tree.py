@@ -247,7 +247,7 @@ def main():
     for case in insert_times:
         print(f"{case}: {insert_times[case]}")
     plt.figure()
-    for case, time in insert_times.items():
+    for case, times in insert_times.items():
         plt.plot(list(time.keys()), list(time.values()), label=case)
     plt.title("Insert Performance: Best Case vs Average Case vs Worst Case")
     plt.xlabel("Tree size")
@@ -277,7 +277,7 @@ def main():
         print(f"{case}: {search_times[case]}")
 
     plt.figure()
-    for case, time in search_times.items():
+    for case, times in search_times.items():
         plt.plot(list(time.keys()), list(time.values()), label=case)
     plt.title("Search Performance: Best Case vs Average Case vs Worst Case")
     plt.xlabel("Tree size")

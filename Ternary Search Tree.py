@@ -215,15 +215,18 @@ def best_case(words):
     return best_words
 
 def main():
-    with open('insert_words.txt', 'r') as file:
+    with open('corncob_lowercase.txt', 'r') as file:
         words = [line.strip() for line in file]
 
     print(f"Loaded {len(words)} words")
     samples = [100, 500, 1000, 2000, 5000, 10000, 50000]
     nr_runs = 10
 
-    word_cases = {'best case': best_case(words),
-        'average case': random.shuffle(words),  # random shuffling of words
+    average_words = sorted(words.copy())
+    random.shuffle(average_words)
+
+    word_cases = {'best case': best_case(sorted(words)),
+        'average case': average_words,  # random shuffling of words
         'worst case': sorted(words)} # original word (already ordered alphabetically)
 
     insert_times = {case: {} for case in word_cases}

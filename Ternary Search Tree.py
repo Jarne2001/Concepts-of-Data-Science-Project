@@ -241,7 +241,7 @@ def main():
                 for w in sample:
                     tree.insert(w)
                 total_time += time.time_ns() - measurement_time
-            insert_times[case][N] = (total_ns / nr_runs) / 1_000_000
+            insert_times[case][N] = (total_time / nr_runs) / 1_000_000
 
     print("Insert times (ms):")
     for case in insert_times:
@@ -270,7 +270,7 @@ def main():
                 for w in sample:
                     tree.search(w)
                 total_time += time.time_ns() - measurement_time
-            search_times[case][N] = (total_ns / nr_runs) / 1_000_000
+            search_times[case][N] = (total_time / nr_runs) / 1_000_000
 
     print("\nSearch times (ms):")
     for case in search_times:

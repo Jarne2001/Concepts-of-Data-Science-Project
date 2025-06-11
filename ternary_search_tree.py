@@ -155,11 +155,11 @@ class TernarySearchTree:
     while path and not node.lo and not node.hi and not node.equal and not node.word_end: # type: ignore
       i, j = path.pop()
       if j == 'lo':
-          i.lo = None
+        i.lo = None
       elif j == 'hi':
-          i.hi = None
+        i.hi = None
       else:
-          i.equal = None
+        i.equal = None
       node = i
     return True
 
@@ -176,22 +176,22 @@ class TernarySearchTree:
     nodes_to_print = []
     spaces = "  " 
     if self._root.equal:
-        nodes_to_print.append((self._root.equal, "_eq:", ""))
+      nodes_to_print.append((self._root.equal, "_eq:", ""))
     if self._root.lo:
-        nodes_to_print.append((self._root.lo, "_lo:", ""))
+      nodes_to_print.append((self._root.lo, "_lo:", ""))
     if self._root.hi:
-        nodes_to_print.append((self._root.hi, "_hi:", ""))
+      nodes_to_print.append((self._root.hi, "_hi:", ""))
 
     while len(nodes_to_print): # traverses the ternary search tree
-        node_now, direction, current_spaces = nodes_to_print.pop(0)
-        print(f"{direction}{current_spaces}      char: {node_now.letter}, terminates: {node_now.word_end}")
-        new_spaces = current_spaces + "  "
-        if node_now.hi:
-            nodes_to_print.append((node_now.hi, "_hi:", new_spaces))
-        if node_now.lo:
-            nodes_to_print.append((node_now.lo, "_lo:", new_spaces))
-        if node_now.equal:
-            nodes_to_print.append((node_now.equal, "_eq:", new_spaces))
+      node_now, direction, current_spaces = nodes_to_print.pop(0)
+      print(f"{direction}{current_spaces}      char: {node_now.letter}, terminates: {node_now.word_end}")
+      new_spaces = current_spaces + "  "
+      if node_now.hi:
+        nodes_to_print.append((node_now.hi, "_hi:", new_spaces))
+      if node_now.lo:
+        nodes_to_print.append((node_now.lo, "_lo:", new_spaces))
+      if node_now.equal:
+        nodes_to_print.append((node_now.equal, "_eq:", new_spaces))
 
 def best_case(words):
   """
@@ -217,7 +217,7 @@ def best_case(words):
 def tests():
   tst = TernarySearchTree()
   with open('corncob_lowercase.txt', 'r') as file:
-      words = [line.strip() for line in file]
+    words = [line.strip() for line in file]
 
   unique_words = set(words)
   for word in unique_words:
@@ -230,16 +230,16 @@ def tests():
       assert tst.search(word), f'{word} not found'
 
   for word in unique_words:
-      for i in range(len(word) - 1, 0, -1):
-          prefix = word[:i]
-          assert tst.search(prefix), f'{prefix} not found'
+    for i in range(len(word) - 1, 0, -1):
+      prefix = word[:i]
+      assert tst.search(prefix), f'{prefix} not found'
 
   for word in unique_words:
-      for i in range(len(word), 0, -1):
-          prefix = word[:i]
-          if prefix not in unique_words:
-              assert not tst.search(prefix), \
-                     f'{prefix} found'
+    for i in range(len(word), 0, -1):
+      prefix = word[:i]
+      if prefix not in unique_words:
+        assert not tst.search(prefix), \
+         f'{prefix} found'
 
   assert tst.search(''), 'empty string not found'
 
@@ -259,7 +259,7 @@ def tests():
 def main():
   tests()
   with open('corncob_lowercase.txt', 'r') as file:
-      words = [line.strip() for line in file]
+    words = [line.strip() for line in file]
 
   print(f"Loaded {len(words)} words")
   samples = [100, 500, 1000, 2000, 5000, 10000, 50000]
@@ -275,23 +275,23 @@ def main():
   insert_times = {case: {} for case in word_cases}
 
   for case, words in word_cases.items():
-      for N in samples:
-          sample = words[:N]
-          total_time = 0
-          for _ in range(nr_runs):
-              tree = TernarySearchTree()
-              measurement_time = time.time_ns()
-              for w in sample:
-                  tree.insert(w)
-              total_time += time.time_ns() - measurement_time
-          insert_times[case][N] = (total_time / nr_runs) / 1_000_000
+    for N in samples:
+      sample = words[:N]
+      total_time = 0
+      for _ in range(nr_runs):
+        tree = TernarySearchTree()
+        measurement_time = time.time_ns()
+        for w in sample:
+          tree.insert(w)
+        total_time += time.time_ns() - measurement_time
+      insert_times[case][N] = (total_time / nr_runs) / 1_000_000
 
   print("Insert times (ms):")
   for case in insert_times:
-      print(f"{case}: {insert_times[case]}")
+    print(f"{case}: {insert_times[case]}")
   plt.figure()
   for case, times in insert_times.items():
-      plt.plot(list(times.keys()), list(times.values()), label=case)
+    plt.plot(list(times.keys()), list(times.values()), label=case)
   plt.title("Insert Performance: Best Case vs Average Case vs Worst Case")
   plt.xlabel("Tree size")
   plt.ylabel("Time (ms)")
@@ -302,26 +302,26 @@ def main():
   search_times = {case: {} for case in word_cases}
 
   for case, words in word_cases.items():
-      tree = TernarySearchTree()
-      for w in words[:samples[-1]]:
-          tree.insert(w)
-      for N in samples:
-          sample = words[:N]
-          total_time = 0
-          for _ in range(nr_runs):
-              measurement_time = time.time_ns()
-              for w in sample:
-                  tree.search(w)
-              total_time += time.time_ns() - measurement_time
-          search_times[case][N] = (total_time / nr_runs) / 1_000_000
+    tree = TernarySearchTree()
+    for w in words[:samples[-1]]:
+      tree.insert(w)
+    for N in samples:
+      sample = words[:N]
+      total_time = 0
+      for _ in range(nr_runs):
+        measurement_time = time.time_ns()
+        for w in sample:
+          tree.search(w)
+        total_time += time.time_ns() - measurement_time
+      search_times[case][N] = (total_time / nr_runs) / 1_000_000
 
   print("\nSearch times (ms):")
   for case in search_times:
-      print(f"{case}: {search_times[case]}")
+    print(f"{case}: {search_times[case]}")
 
   plt.figure()
   for case, times in search_times.items():
-      plt.plot(list(times.keys()), list(times.values()), label=case)
+    plt.plot(list(times.keys()), list(times.values()), label=case)
   plt.title("Search Performance: Best Case vs Average Case vs Worst Case")
   plt.xlabel("Tree size")
   plt.ylabel("Time (ms)")

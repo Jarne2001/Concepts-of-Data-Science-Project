@@ -202,7 +202,7 @@ def best_case(words):
     best_words = []
     stack = [(0, len(words)-1)]
     while len(stack) >0:
-        item = stack.pop(0)
+        item = stack.pop()
         lo = item[0]
         hi = item[1]
         if hi >= lo:
@@ -248,7 +248,7 @@ def main():
         print(f"{case}: {insert_times[case]}")
     plt.figure()
     for case, times in insert_times.items():
-        plt.plot(list(times.keys()), list(time.values()), label=case)
+        plt.plot(list(times.keys()), list(times.values()), label=case)
     plt.title("Insert Performance: Best Case vs Average Case vs Worst Case")
     plt.xlabel("Tree size")
     plt.ylabel("Time (ms)")
@@ -278,7 +278,7 @@ def main():
 
     plt.figure()
     for case, times in search_times.items():
-        plt.plot(list(times.keys()), list(time.values()), label=case)
+        plt.plot(list(times.keys()), list(times.values()), label=case)
     plt.title("Search Performance: Best Case vs Average Case vs Worst Case")
     plt.xlabel("Tree size")
     plt.ylabel("Time (ms)")

@@ -297,7 +297,7 @@ def main():
             sample = words[:N]
             total_time = 0
             for _ in range(nr_runs):
-                tree = TernarySearchTree()
+                tree = Btree()
                 measurement_time = time.time_ns()
                 for w in sample:
                     tree.insert(w)
@@ -320,7 +320,7 @@ def main():
     search_times = {case: {} for case in word_cases}
 
     for case, words in word_cases.items():
-        tree = TernarySearchTree()
+        tree = Btree()
         for w in words[:samples[-1]]:
             tree.insert(w)
         for N in samples:

@@ -6,6 +6,7 @@ strings, the time complexity becomes O(log n + k), because perform a small num
 words) plus one middle‑child step for each character. However, in the worst case, such as when words are inserted in sorted order and the tree degenerates 
 into a very long chain each tree step can take O(n + k) time, as each character search may traverse nearly all nodes before continuing to the next character 
 (en.wikipedia.org).
+
 Regarding space complexity, a ternary search tree uses one node per character of all the words it stores, and each node holds three children plus a character and 
 a small flag. Thus the total space required is O(n × k), proportional to the summed length of all words the tree contains. Since this implementation uses an 
 iterative approach, it is expected to go faster as well.
@@ -48,23 +49,26 @@ so all three measured search times march upward in proportion to the size of the
 
 # Comparison with B-tree
 
-A ternary search tree stores exactly one character per node and uses three children: lo, equal and hi, which makes it ideal for prefix lookups, auto-completion,...
-however, its height can grow with insertion order and shared prefixes, yielding a best-case time of O(k) for a word of length k but degrading to O(k + n) in worst cases. 
+A ternary search tree stores one character per node and uses three children—low, equal, and high—making it ideal for prefix-based functions like 
+autocomplete. It offers O(k) best-case time for a string of length k, O(log n + k) for the average case, but can degrade to O(k + n) in the worst case due to unbalanced insertions. 
+In contrast, a B-Tree stores multiple characters per node, keeping nodes balanced and height shallow, which causes consistent O(log n) performance 
+for search and insert functions in the best, worst and average case. Ternary search trees are often faster than naïve binary search trees for strings, 
+due to prefix sharing and character traversal. For large string datasets, B-Trees theoretically outperform ter,ary search trees in performance time.
 
-A well-balanced B-Tree, by contrast, packs many characters into each node (up to m – 1 characters and m children) sized to 
-efficient disk usage, and automatically splits and merges all nodes at an equal depth and height and consistently delivers search, insert, and delete performance.
-
-A Ternary Search Tree is often faster and more memory-efficient than a naïve binary-tree because it shares prefixes 
-and avoids large per-node arrays, but it usually consumes more memory per stored string than a tightly packed B-Tree node optimized for 
-page-sized storage; for large datasets, B-Trees outperform ternary search trees both in speed and overall memory usage.
 
 # Ternary search tree vs B-tree plots comparison
 
 As observed on the B-tree plots for the insert and search functions, the worst case takes extremely long to run for 50000 words, making the other cases appear flat
-because of the performance time scale difference. These average and best case performances most likely are linear increasing, similar to the ternary search tree. The 
+because of the performance time scale difference. A theoretical O(log n) performance time cannot also be seen on the graphs either, but this could also be caused by the scale.
+These average and best case performances most likely are linearly increasing, similar to the ternary search tree. The 
 reason why the worst case takes so long is not only because all the words are sorted, but also because the used B-tree implementation uses a recursive approach. This is
 known to take longer than an iterative version.
+
+The plots show that a B-tree is slower in performance time for both the insert and search functions for a large string dataset (50000 words), especially in the worst case.
+This goes in against the theorized faster performance time for large datasets of a B-tree, however its approach is recursive which could also increase performance time.
 
 # References:
 Bentley, J. L., & Sedgewick, R. (1997). Ternary search trees. Dr. Dobb’s Journal, 22(4), 20–26. Retrieved from https://www.drdobbs.com/database/ternary-search-trees/184410528
 Wikipedia contributors. (2024). Ternary search tree. In Wikipedia, The Free Encyclopedia. Retrieved June 11, 2025, from https://en.wikipedia.org/wiki/Ternary_search_tree
+https://www.geeksforgeeks.org/introduction-of-b-tree-2/
+https://en.wikipedia.org/wiki/B-tree

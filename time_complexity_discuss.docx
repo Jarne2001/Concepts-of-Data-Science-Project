@@ -63,3 +63,4 @@ a Ternary Search Tree is often faster and more memory-efficient than a naïve bi
 and avoids large per-node arrays, but it usually consumes more memory per stored string than a tightly packed B-Tree node optimized for 
 page-sized storage; for large datasets, B-Trees outperform Ternary Search Trees both in speed and overall memory usage.
 
+# iets toevoegen over de worst case scenario bij binary tree 

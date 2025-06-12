@@ -46,21 +46,25 @@ up RAM and tree traversals become slower, still causing a linear slope as well.
 In short, the theoretical k- or log-shaped curves are masked by the large scale, slightly skewed word list, lo and hi-checking and imperfect balancing, 
 so all three measured search times march upward in proportion to the size of the ternary search tree.
 
+# Comparison with B-tree
+
+A ternary search tree stores exactly one character per node and uses three children: lo, equal and hi, which makes it ideal for prefix lookups, auto-completion,...
+however, its height can grow with insertion order and shared prefixes, yielding a best-case time of O(k) for a word of length k but degrading to O(k + n) in worst cases. 
+
+A well-balanced B-Tree, by contrast, packs many characters into each node (up to m – 1 characters and m children) sized to 
+efficient disk usage, and automatically splits and merges all nodes at an equal depth and height and consistently delivers search, insert, and delete performance.
+
+A Ternary Search Tree is often faster and more memory-efficient than a naïve binary-tree because it shares prefixes 
+and avoids large per-node arrays, but it usually consumes more memory per stored string than a tightly packed B-Tree node optimized for 
+page-sized storage; for large datasets, B-Trees outperform ternary search trees both in speed and overall memory usage.
+
+# Ternary search tree vs B-tree plots comparison
+
+As observed on the B-tree plots for the insert and search functions, the worst case takes extremely long to run for 50000 words, making the other cases appear flat
+because of the performance time scale difference. These average and best case performances most likely are linear increasing, similar to the ternary search tree. The 
+reason why the worst case takes so long is not only because all the words are sorted, but also because the used B-tree implementation uses a recursive approach. This is
+known to take longer than an iterative version.
+
 # References:
 Bentley, J. L., & Sedgewick, R. (1997). Ternary search trees. Dr. Dobb’s Journal, 22(4), 20–26. Retrieved from https://www.drdobbs.com/database/ternary-search-trees/184410528
 Wikipedia contributors. (2024). Ternary search tree. In Wikipedia, The Free Encyclopedia. Retrieved June 11, 2025, from https://en.wikipedia.org/wiki/Ternary_search_tree
-
-# Comparison with b-tree
-
-A Ternary Search Tree (TST) stores exactly one character per node and uses three children: lo, equal and hi, which makes it ideal for in-memory string 
-dictionaries, prefix lookups, auto-completion, and spell checking; however, its height can grow with insertion order and shared prefixes, 
-yielding a best-case time of O(L) for a length-L key but degrading to O(L + N) in worst cases. 
-
-A well-balanced B-Tree, by contrast, packs many keys into each node (up to m – 1 keys and m children) sized to 
-efficient disk usage, automatically splits and merges to keep all nodes at equal depth and height and consistently delivers search, insert, and delete performance.
-
-a Ternary Search Tree is often faster and more memory-efficient than a naïve binary-tree because it shares prefixes 
-and avoids large per-node arrays, but it usually consumes more memory per stored string than a tightly packed B-Tree node optimized for 
-page-sized storage; for large datasets, B-Trees outperform Ternary Search Trees both in speed and overall memory usage.
-
-# iets toevoegen over de worst case scenario bij binary tree 

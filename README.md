@@ -87,6 +87,8 @@ due to prefix sharing and character traversal. For large string datasets, B-Tree
 
 # Ternary search tree vs B-tree plots comparison
 
+![Figure 3: Plot showcasing the insert performance of the B-tree.](https://raw.githubusercontent.com/Jarne2001/Concepts-of-Data-Science-Project/refs/heads/main/insert_comparison_btree.png)
+
 As observed on the B-tree plots for the insert and search functions, the worst case shows a linear growth an takes extremely long to run for 50000 words, 
 making the other cases (which are assumed to have a logarithmic growth) appear flat because of the performance time scale difference (logarithmic growth looks constant
 on linear time scale). These average and best case performances most likely are linearly increasing, similar to the ternary search tree. The 

@@ -46,6 +46,8 @@ the worst case there is O(n+k) time.
 
 # Insert function performance time
 
+![Figure 1: 3 plots representing the performance time for the insert function of the implemented ternary search tree, for different performance cases](https://raw.githubusercontent.com/Jarne2001/Concepts-of-Data-Science-Project/refs/heads/main/insert_comparison_ternary_tree.png)
+
 When the performance time for the insert function is plotted against the number of words already in the tree, three mostly straight lines are observed, 
 with one for each insertion in a case (Fig. 1). In theory, "best-case" inserts should cost O(k) time and therefore stay flat as the tree grows; "average-case" 
 should cost O(log n+k), rising only very slowly (logarithmically) with n; and "worst-case" should cost O(n+k), rising in direct proportion to the tree size.

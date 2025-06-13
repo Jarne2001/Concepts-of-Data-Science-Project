@@ -111,7 +111,7 @@ also increase performance time.
 
 # References:
 
-Bentley, J. L., & Sedgewick, R. (1997). Ternary search trees. Dr. Dobb’s Journal, 22(4), 20–26. Retrieved from https://www.drdobbs.com/database/ternary-search-trees/184410528
-GeeksforGeeks (2025). Introduction of B‑tree. Retrieved June 13, 2025, from https://www.geeksforgeeks.org/introduction-of-b-tree-2/
-Wikipedia contributors (2025). B‑tree. In Wikipedia, The Free Encyclopedia. Retrieved June 13, 2025, from https://en.wikipedia.org/wiki/B-tree
-Wikipedia contributors (2024). Ternary search tree. In Wikipedia, The Free Encyclopedia. Retrieved June 11, 2025, from https://en.wikipedia.org/wiki/Ternary_search_tree
+-*Bentley, J. L., & Sedgewick, R. (1997). Ternary search trees. Dr. Dobb’s Journal, 22(4), 20–26. Retrieved from https://www.drdobbs.com/database/ternary-search-trees/184410528*
+-*GeeksforGeeks (2025). Introduction of B‑tree. Retrieved June 13, 2025, from https://www.geeksforgeeks.org/introduction-of-b-tree-2/*
+-*Wikipedia contributors (2025). B‑tree. In Wikipedia, The Free Encyclopedia. Retrieved June 13, 2025, from https://en.wikipedia.org/wiki/B-tree*
+-*Wikipedia contributors (2024). Ternary search tree. In Wikipedia, The Free Encyclopedia. Retrieved June 11, 2025, from https://en.wikipedia.org/wiki/Ternary_search_tree*

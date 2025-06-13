@@ -20,6 +20,19 @@ The repository consists of the following files:
 
 # Discussion of the expected time and space complexity
 
+In a ternary search tree, functions like search, insert, or delete on a word of length k (k characters of a string) in a tree holding n 
+(n is total number of stored words) words have clearly defined performance bounds. In the best case, when the tree is perfectly balanced and each 
+character comparison immediately follows the "equal" child the time complexity is O(k). In more typical conditions with randomized 
+strings, the time complexity becomes O(log n+k), because a small number of left and right comparisons are made (logarithmic in the number of stored 
+words) plus one middle‑child step for each character. However, in the worst case, such as when words are inserted in sorted order and the tree degenerates 
+into a very long chain each tree step can take O(n+k) time, as each character search may traverse nearly all nodes before continuing to the next character 
+(en.wikipedia.org).
+
+Regarding space complexity, a ternary search tree uses one node per character of all the words it stores, and each node holds three children plus a character and 
+a small flag. Thus the total space required is O(n×k), proportional to the summed length of all words the tree contains. Since this implementation uses an 
+iterative approach, it is expected to go faster as well.
+Summarized, a word of length k in a ternary search tree of n words, it performs in O(k) time in the best case, O(log n + k) in the average case, 
+and O(n+k) in the worst case, while using O(n×k) memory.
 
 # Conclusions
 

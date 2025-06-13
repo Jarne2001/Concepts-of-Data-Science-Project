@@ -49,7 +49,7 @@ the worst case there is O(n+k) time.
 ![Figure 1: 3 plots representing the performance time for the insert function of the implemented ternary search tree, for different performance cases](https://raw.githubusercontent.com/Jarne2001/Concepts-of-Data-Science-Project/refs/heads/main/insert_comparison_ternary_tree.png)
 
 When the performance time for the insert function is plotted against the number of words already in the tree, three mostly straight lines are observed, 
-with one for each insertion in a case (Fig. 1). In theory, "best-case" inserts should cost O(k) time and therefore stay flat as the tree grows; "average-case" 
+with one for each insertion in a case. In theory, "best-case" inserts should cost O(k) time and therefore stay flat as the tree grows; "average-case" 
 should cost O(log n+k), rising only very slowly (logarithmically) with n; and "worst-case" should cost O(n+k), rising in direct proportion to the tree size.
 The worst-case curve behaves exactly as expected: it climbs steeply and linearly, so inserting into a degenerate, one-sided tree takes time proportional to n. 
 It is also the curve that has the longest performance time as expected. The best-case curve, by contrast, does not stay perfectly flat but slopes mostly upward. 
@@ -63,6 +63,8 @@ In summary, the three curves do preserve the order best < average < worst, but o
 words and suboptimal tree balancing make even the "best" and "average" lines pick up an n-dependence and because actual code does not always fit theory.
 
 # Search function performance time
+
+![Figure 2: Plot showcasing the search function of the implemented ternary search tree](https://raw.githubusercontent.com/Jarne2001/Concepts-of-Data-Science-Project/refs/heads/main/search_comparison_ternary_tree.png)
 
 The plot with search time against tree size in words, all three best, average and worst curves rise almost perfectly linearly, even though theory says best-case should 
 be O(k) (flat) and average-case should be O(log n+k) (very slowly rising). Basically big O-notation describes asymptotic growth and hides constant factors (like

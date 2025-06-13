@@ -102,7 +102,10 @@ This is because actual words and suboptimal tree balancing make even the "best" 
 In short, the theoretical k-or log-shaped curves are masked by the large scale, slightly skewed word list, lo and hi-checking and imperfect balancing, 
 so all three measured search times march upward in proportion to the size of the ternary search tree.
 
-The plots show that a B-tree is overall slower in performance time, mostly dominated by the worst case, for both the insert and search functions for a large string dataset (50000 words), especially in the worst case. This goes in against the theorized faster performance time for large datasets of a B-tree, however its approach is recursive which could also increase performance time.
+The plots show that a B-tree is overall slower in performance time, mostly dominated by the worst case, for both the insert and search functions for a large string dataset (50000 words), 
+especially in the worst case which is much larger. The other 2 cases have rather similar performance times for both search trees. This goes in against the theorized faster performance 
+time for large datasets of a B-tree, however its approach is recursive which could 
+also increase performance time.
 
 # References:
 

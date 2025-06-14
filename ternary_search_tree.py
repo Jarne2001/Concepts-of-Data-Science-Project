@@ -229,11 +229,10 @@ def tests():
   for word in unique_words:
       assert tst.search(word), f'{word} not found'
 
-  # Use fake words instead of not_insert_words.txt
-  with open('insert_words.txt', 'r') as file:
-      for line in file:
-          word = line.strip()
-          assert not tst.search(word), f'{word} should not be found'
+  not_insert_words = ['hasselt', 'diepenbeek', 'arnhem']
+  for line in not_insert_words:
+      word = line.strip()
+      assert not tst.search(word), f'{word} should not be found'
 
   all_strings = tst.all_strings()
   assert len(all_strings) == len(unique_words), \

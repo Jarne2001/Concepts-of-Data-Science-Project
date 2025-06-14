@@ -50,13 +50,10 @@ In short, the theoretical k-or log-shaped curves are masked by the large scale, 
 so all three measured search times march upward in proportion to the size of the ternary search tree.
 
 # Comparison with B-tree
-
-A ternary search tree stores one character per node and uses three children—low, equal, and high—making it ideal for prefix-based functions like 
-autocomplete. It offers O(k) best-case time for a string of length k, O(log n+k) for the average case, but can degrade to O(k+n) in the worst case due to unbalanced insertions. 
-In contrast, a B-Tree stores multiple characters per node, keeping nodes balanced and height shallow, which causes consistent O(log n) performance 
-for search and insert functions in the best, worst and average case. Ternary search trees are often faster than naïve binary search trees for strings, 
-due to prefix sharing and character traversal. For large string datasets, B-Trees theoretically outperform ternary search trees in performance time.
-
+A ternary search tree stores one character per node and uses three children—low, equal, and high—making it ideal for prefix-based functions like autocomplete. 
+It offers O(k) best-case time for a string of length k, O(log n+k) for the average case, but can degrade to O(k+n) in the worst case due to unbalanced insertions. 
+In contrast, a Binary Search Tree stores one complete string per node, using two children—left and right. Like ternary search trees, 
+binary search trees can become unbalanced, leading to O(n) worst-case performance when strings are inserted in sorted order.
 
 # Ternary search tree vs B-tree plots comparison
 

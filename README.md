@@ -5,7 +5,7 @@ This repository is for working on the Concepts of Data Science Project. The proj
 
 The repository consists of the following files:
 
-- **Binary Tree.py**: Given Binary Search Tree implementation, needed for comparison purposes.
+- **Binary Tree.py**: Binary Search Tree implementation as provided in the course materials for comparison purposes.
 - **Space Complexity.py**: Python function to test for the space complexity of the current Ternary Search Tree implementation.  
 - **Ternary Search Tree.py**: Actual implementation of the Ternary Search Tree.  
 - **corncob_lowercase.txt**: English dictionary of 50,000 lowercase words (http://www.mieliestronk.com/corncob_lowercase.txt).  

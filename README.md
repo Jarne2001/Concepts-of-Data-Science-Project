@@ -5,18 +5,27 @@ This repository is for working on the Concepts of Data Science Project. The proj
 
 The repository consists of the following files:
 
-- **Binary Tree.py**: Binary Search Tree implementation as provided in the course materials for comparison purposes.
-- **Space Complexity.py**: Python function to test for the space complexity of the current Ternary Search Tree implementation.  
-- **Ternary Search Tree.py**: Actual implementation of the Ternary Search Tree.  
-- **corncob_lowercase.txt**: English dictionary of 50,000 lowercase words (http://www.mieliestronk.com/corncob_lowercase.txt).  
-- **insert_words-checkpoint.txt**: File containing checkpoints for the insert_words.txt file.  
-- **insert_words.txt**: Given test words to test the Ternary Search Tree.  
-- **job script**: Job script to run benchmarking on the HPC infrastructure.  
-- **not_insert_words-checkpoint.txt**: File containing checkpoints for the not_insert_words.txt file.  
-- **not_insert_words.txt**: Words not inserted into the tree, used to validate negative search cases.  
-- **project_2024_2025.docx**: Project description from the Concepts of Data Science course.  
-- **time_complexity_discuss**: A written discussion of expected time and space complexity.  
-- **time_plots.py**: Time plots showing performance metrics for the tree implementation.
+- **b_tree.py**: Binary Search Tree implementation as provided in the course materials for comparison purposes.
+- **ternary_search_tree.py**: Custom implementation of the Ternary Search Tree with full functionality.
+- **time_plots.py**: Script for generating performance plots and metrics for both tree implementations.
+- **corncob_lowercase.txt**: English dictionary of 50,000 lowercase words ([source](http://www.mieliestronk.com/corncob_lowercase.txt)).
+- **insert_words.txt**: Test words used for validating tree insertion functionality.
+- **not_insert_words.txt**: Words not inserted into the tree, used to validate negative search cases.
+- **insert_words-checkpoint.txt**: Checkpoint file for insert_words.txt.
+- **not_insert_words-checkpoint.txt**: Checkpoint file for not_insert_words.txt.
+- **insert_comparison_btree.png**: Performance plot showing insert times for the binary search tree.
+- **insert_comparison_ternary_tree.png**: Performance plot showing insert times for the ternary search tree.
+- **search_comparison_b_tree.png**: Performance plot showing search times for the binary search tree.
+- **search_comparison_ternary_search_tree.png**: Performance plot showing search times for the ternary search tree.
+- **job_script_b_tree.slurm**: SLURM job script for running binary search tree benchmarks on HPC infrastructure.
+- **job_script_ternary_search_tree.slurm**: SLURM job script for running ternary search tree benchmarks on HPC infrastructure.
+- **slurm-58222805.out**: HPC job output file from ternary search tree benchmarking.
+- **slurm-58225562.out**: HPC job output file from binary search tree benchmarking.
+- **project_2024_2025.docx**: Original project description from the Concepts of Data Science course.
+- **time_complexity_discuss.docx**: Written analysis of expected time and space complexity.
+- **README.md**: This documentation file.
+
+Note: The binary search tree implementation follows the structure provided in the course lectures, where it was referred to as "B-tree" in the educational materials.
 
 # Discussion of the expected time and space complexity
 

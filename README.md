@@ -99,7 +99,7 @@ binary search trees can become unbalanced, leading to O(n) worst-case performanc
 
 ![Figure 4: Plot showcasing the search performance of the B-tree](https://raw.githubusercontent.com/Jarne2001/Concepts-of-Data-Science-Project/refs/heads/main/search_comparison_btree.png)
 
-As observed on the B-tree plots for the insert and search functions, the worst case shows a linear growth an takes extremely long to run for 50000 words, 
+As observed on the B-tree plots for the insert and search functions, the worst case shows a linear growth and takes extremely long to run for 50000 words, 
 making the other cases (which are assumed to have a logarithmic growth) appear flat because of the performance time scale difference (logarithmic growth looks constant
 on linear time scale). These average and best case performances most likely are linearly increasing, similar to the ternary search tree. The 
 reason why the worst case takes so long is not only because all the words are sorted, but also because the used B-tree implementation uses a recursive approach. This is
@@ -113,7 +113,7 @@ In short, the theoretical k-or log-shaped curves are masked by the large scale, 
 so all three measured search times march upward in proportion to the size of the ternary search tree.
 
 The plots show that a B-tree is overall slower in performance time, mostly dominated by the worst case, for both the insert and search functions for a large string dataset (50000 words), 
-especially in the worst case which is much larger. The other 2 cases have rather similar performance times for both search trees. This goes in against the theorized faster performance 
+especially in the worst case which is much larger. The other 2 cases have rather similar performance times for both search trees. This goes against the theorized faster performance 
 time for large datasets of a B-tree, however its approach is recursive which could 
 also increase performance time.
 

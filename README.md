@@ -25,7 +25,7 @@ The repository consists of the following files:
 - **time_complexity_discuss.docx**: Written analysis of expected time and space complexity.
 - **README.md**: This documentation file.
 
-Note: The binary search tree implementation follows the structure provided in the course lectures, where it was referred to as "B-tree" in the educational materials.
+Note: The binary search tree implementation follows the structure provided in the course lectures, where it was referred to as "B-tree" in the jupyter notebook.
 
 # Discussion of the expected time and space complexity
 

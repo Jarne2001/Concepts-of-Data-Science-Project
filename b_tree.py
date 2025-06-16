@@ -2,10 +2,12 @@ import time
 import random
 import matplotlib.pyplot as plt
 import sys
+
 sys.setrecursionlimit(100000)
 
+
 class BtreeNode:
-    
+
     def __init__(self, string):
         self._string = string
         self._lt, self._gt = None, None
@@ -23,7 +25,7 @@ class BtreeNode:
                 self._gt = BtreeNode(string)
             else:
                 self._gt._insert(string)
-    
+
     def _search(self, string):
         if string == self._string:
             return True
@@ -31,7 +33,7 @@ class BtreeNode:
             return self._lt is not None and self._lt._search(string)
         else:
             return self._gt is not None and self._gt._search(string)
-    
+
     def _all_strings(self):
         strings = [self._string]
         if self._lt is not None:
@@ -48,12 +50,12 @@ class BtreeNode:
             length += len(self._gt)
         return length
 
-    def _to_string(self, indent=''):
+    def _to_string(self, indent=""):
         repr_str = indent + repr(self)
         if self._lt is not None:
-            repr_str += '\n' + self._lt._to_string(indent + '  ')
+            repr_str += "\n" + self._lt._to_string(indent + "  ")
         if self._gt is not None:
-            repr_str += '\n' + self._gt._to_string(indent + '  ')
+            repr_str += "\n" + self._gt._to_string(indent + "  ")
         return repr_str
 
     def __repr__(self):
@@ -61,10 +63,10 @@ class BtreeNode:
 
 
 class Btree:
-    
+
     def __init__(self):
         self._root = None
-        
+
     def insert(self, string):
         if self._root is None:
             self._root = BtreeNode(string)
@@ -76,24 +78,25 @@ class Btree:
             return False
         else:
             return self._root._search(string)
-        
+
     def all_strings(self):
         if self._root is None:
             return []
         else:
             return self._root._all_strings()
-        
+
     def __len__(self):
         if self._root is None:
             return 0
         else:
             return len(self._root)
-    
+
     def __repr__(self):
         if self._root is None:
-            return 'empty tree'
+            return "empty tree"
         else:
-            return self._root._to_string('')
+            return self._root._to_string("")
+
 
 def best_case(words):
     """
@@ -102,22 +105,23 @@ def best_case(words):
     """
     words = sorted(words)
     best_words = []
-    stack = [(0, len(words)-1)]
-    while len(stack) >0:
+    stack = [(0, len(words) - 1)]
+    while len(stack) > 0:
         item = stack.pop()
         lo = item[0]
         hi = item[1]
         if hi >= lo:
-          median = (lo + hi) // 2
-          stack.append((lo, median-1))
-          stack.append((median+1, hi))
-          best_words.append(words[median])
+            median = (lo + hi) // 2
+            stack.append((lo, median - 1))
+            stack.append((median + 1, hi))
+            best_words.append(words[median])
         else:
-          continue
+            continue
     return best_words
 
+
 def main():
-    with open('corncob_lowercase.txt', 'r') as file:
+    with open("corncob_lowercase.txt", "r") as file:
         words = [line.strip() for line in file]
 
     print(f"Loaded {len(words)} words")
@@ -127,9 +131,11 @@ def main():
     average_words = sorted(words.copy())
     random.shuffle(average_words)
 
-    word_cases = {'best case': best_case(sorted(words)),
-        'average case': average_words,  # random shuffling of words
-        'worst case': sorted(words)} # original word (already ordered alphabetically)
+    word_cases = {
+        "best case": best_case(sorted(words)),
+        "average case": average_words,  # random shuffling of words
+        "worst case": sorted(words),
+    }  # original word (already ordered alphabetically)
 
     insert_times = {case: {} for case in word_cases}
 
@@ -155,14 +161,14 @@ def main():
     plt.xlabel("Tree size")
     plt.ylabel("Time (ms)")
     plt.legend()
-    plt.savefig('insert_comparison_btree.png')
+    plt.savefig("insert_comparison_btree.png")
     plt.close()
-    
+
     search_times = {case: {} for case in word_cases}
 
     for case, words in word_cases.items():
         tree = Btree()
-        for w in words[:samples[-1]]:
+        for w in words[: samples[-1]]:
             tree.insert(w)
         for N in samples:
             sample = words[:N]
@@ -185,8 +191,9 @@ def main():
     plt.xlabel("Tree size")
     plt.ylabel("Time (ms)")
     plt.legend()
-    plt.savefig('search_comparison_btree.png')
+    plt.savefig("search_comparison_btree.png")
     plt.close()
+
 
 if __name__ == "__main__":
     main()

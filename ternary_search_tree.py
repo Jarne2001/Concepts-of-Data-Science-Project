@@ -115,7 +115,7 @@ class TernarySearchTree:
 
   def len(self):
     """
-    This function returns the number of words inside the tree.
+    This function returns the number of words inside the tree (the length of the string_list).
     """
     if not self._string_list:
       return 0
@@ -123,7 +123,7 @@ class TernarySearchTree:
     
   def delete(self, word):
     """
-    This function deletes a word from the tree
+    This function deletes a word from the tree if it is present.
     """
     if word not in self._string_list:
       raise KeyError(f"{word} is not in the tree.") # if word not present

@@ -1,5 +1,7 @@
 """
-This Python file contains the code for the implementation of a Ternary Search Tree with an object-oriented approach.
+This Python file contains the code for the implementation of a Ternary Search Tree with an object-oriented approach. It contains functions to insert words, 
+return all strings stored, search presence of strings, returns the tree length, deleting specific words and console-printing the tree. Additionally, it allows
+to test a dataset of 500000 strings (benchmarking).
 """
 import time
 import random
